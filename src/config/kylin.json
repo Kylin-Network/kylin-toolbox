@@ -1,0 +1,436 @@
+{
+  "auctionDuration": 201600,
+  "leaseIndex": 0,
+  "paraId": 2012,
+  "relayAsset": 101,
+  "gift": "1000000000000000",
+  "stakingLedgerCap": "1000000000000000",
+  "paraDeposit": "0",
+  "crowdloanDeposit": "10000000000000",
+  "assets": [
+    {
+      "name": "Polkadot Unbonding",
+      "symbol": "DOT_U",
+      "assetId": 4294957296,
+      "decimal": 10,
+      "balances": []
+    },
+    {
+      "name": "Polkadot",
+      "symbol": "DOT",
+      "assetId": 101,
+      "decimal": 10,
+      "balances": [
+        ["5EYCAe5iie3JmgLB4rm1NHQtyYGiaYYBEB1jt7p35dXjQWJ8", "1000000000000000"],
+        ["5HHMY7e8UAqR5ZaHGaQnRW5EDR8dP7QpAyjeBu6V7vdXxxbf", "100000000000000000"]
+      ]
+    },
+    {
+      "name": "Tether Dollar",
+      "symbol": "USDT",
+      "assetId": 102,
+      "decimal": 6,
+      "balances": [["5HHMY7e8UAqR5ZaHGaQnRW5EDR8dP7QpAyjeBu6V7vdXxxbf", "100000000000000000000"]]
+    },
+    {
+      "name": "Acala Dollar",
+      "symbol": "AUSD",
+      "assetId": 104,
+      "decimal": 12,
+      "balances": []
+    },
+    {
+      "name": "Acala",
+      "symbol": "ACA",
+      "assetId": 108,
+      "decimal": 12,
+      "balances": []
+    },
+    {
+      "name": "Acala DOT",
+      "symbol": "LDOT",
+      "assetId": 110,
+      "decimal": 10,
+      "balances": []
+    },
+    {
+      "name": "Ethereum USDT",
+      "symbol": "EUSDT",
+      "assetId": 201,
+      "decimal": 6,
+      "balances": [["5HHMY7e8UAqR5ZaHGaQnRW5EDR8dP7QpAyjeBu6V7vdXxxbf", "100000000000000000000"]]
+    },
+    {
+      "name": "Ethereum USDC",
+      "symbol": "EUSDC",
+      "assetId": 202,
+      "decimal": 6,
+      "balances": [["5HHMY7e8UAqR5ZaHGaQnRW5EDR8dP7QpAyjeBu6V7vdXxxbf", "100000000000000000000"]]
+    },
+    {
+      "name": "kylin Staking Polkadot",
+      "symbol": "sDOT",
+      "assetId": 1001,
+      "decimal": 10,
+      "balances": []
+    },
+    {
+      "name": "kylin Crowdloans Polkadot - (0 ~ 7)",
+      "symbol": "cDOT-0/7",
+      "assetId": 4000,
+      "decimal": 10,
+      "balances": []
+    },
+    {
+      "name": "kylin Crowdloans Polkadot - (7 ~ 14)",
+      "symbol": "cDOT-7/14",
+      "assetId": 200070014,
+      "decimal": 10,
+      "balances": [
+        ["5EYCAe5iie3JmgLB4rm1NHQtyYGiaYYBEB1jt7p35dXjQWJ8", "1000000000000000"],
+        ["5HHMY7e8UAqR5ZaHGaQnRW5EDR8dP7QpAyjeBu6V7vdXxxbf", "100000000000000000"]
+      ]
+    },
+    {
+      "name": "kylin LP-USDT/PARA",
+      "symbol": "LP-USDT/PARA",
+      "assetId": 6000,
+      "decimal": 12,
+      "balances": []
+    },
+    {
+      "name": "kylin LP-DOT/USDT",
+      "symbol": "LP-DOT/USDT",
+      "assetId": 6001,
+      "decimal": 12,
+      "balances": []
+    },
+    {
+      "name": "kylin LP-DOT/PARA",
+      "symbol": "LP-DOT/PARA",
+      "assetId": 6002,
+      "decimal": 12,
+      "balances": []
+    },
+    {
+      "name": "kylin LP-DOT/CDOT-7-14",
+      "symbol": "LP-DOT/CDOT-7-14",
+      "assetId": 6005,
+      "decimal": 12,
+      "balances": []
+    },
+    {
+      "name": "Astar",
+      "symbol": "ASTR",
+      "assetId": 112,
+      "decimal": 18,
+      "balances": []
+    },
+    {
+      "name": "Moonbeam",
+      "symbol": "GLMR",
+      "assetId": 114,
+      "decimal": 18,
+      "balances": []
+    }
+  ],
+  "markets": [
+    {
+      "assetId": 101,
+      "marketConfig": {
+        "closeFactor": 50e4,
+        "collateralFactor": 50e4,
+        "liquidationThreshold": 55e4,
+        "reserveFactor": 15e4,
+        "supplyCap": "100000000000000000",
+        "borrowCap": "100000000000000000",
+        "liquidateIncentive": "1100000000000000000",
+        "liquidateIncentiveReservedFactor": 3e4,
+        "rateModel": {
+          "jump": {
+            "baseRate": "20000000000000000",
+            "jumpRate": "100000000000000000",
+            "fullRate": "320000000000000000",
+            "jumpUtilization": 8e5
+          }
+        },
+        "state": "Pending",
+        "ptokenId": 2101
+      }
+    },
+    {
+      "assetId": 102,
+      "marketConfig": {
+        "closeFactor": 50e4,
+        "collateralFactor": 50e4,
+        "liquidationThreshold": 55e4,
+        "reserveFactor": 15e4,
+        "supplyCap": "100000000000000000",
+        "borrowCap": "100000000000000000",
+        "liquidateIncentive": "1100000000000000000",
+        "liquidateIncentiveReservedFactor": 3e4,
+        "rateModel": {
+          "jump": {
+            "baseRate": "20000000000000000",
+            "jumpRate": "100000000000000000",
+            "fullRate": "320000000000000000",
+            "jumpUtilization": 8e5
+          }
+        },
+        "state": "Pending",
+        "ptokenId": 2102
+      }
+    },
+    {
+      "assetId": 1001,
+      "marketConfig": {
+        "closeFactor": 50e4,
+        "collateralFactor": 50e4,
+        "liquidationThreshold": 55e4,
+        "reserveFactor": 15e4,
+        "supplyCap": "100000000000000000",
+        "borrowCap": "100000000000000000",
+        "liquidateIncentive": "1100000000000000000",
+        "liquidateIncentiveReservedFactor": 3e4,
+        "rateModel": {
+          "jump": {
+            "baseRate": "20000000000000000",
+            "jumpRate": "100000000000000000",
+            "fullRate": "320000000000000000",
+            "jumpUtilization": 8e5
+          }
+        },
+        "state": "Pending",
+        "ptokenId": 3001
+      }
+    },
+    {
+      "assetId": 200070014,
+      "marketConfig": {
+        "closeFactor": 50e4,
+        "collateralFactor": 50e4,
+        "liquidationThreshold": 55e4,
+        "reserveFactor": 15e4,
+        "supplyCap": "100000000000000000",
+        "borrowCap": "100000000000000000",
+        "liquidateIncentive": "1100000000000000000",
+        "liquidateIncentiveReservedFactor": 3e4,
+        "rateModel": {
+          "jump": {
+            "baseRate": "20000000000000000",
+            "jumpRate": "100000000000000000",
+            "fullRate": "320000000000000000",
+            "jumpUtilization": 8e5
+          }
+        },
+        "state": "Pending",
+        "ptokenId": 200072014
+      }
+    },
+    {
+      "assetId": 6005,
+      "marketConfig": {
+        "closeFactor": 50e4,
+        "collateralFactor": 50e4,
+        "liquidationThreshold": 55e4,
+        "reserveFactor": 15e4,
+        "supplyCap": "100000000000000000",
+        "borrowCap": "100000000000000000",
+        "liquidateIncentive": "1100000000000000000",
+        "liquidateIncentiveReservedFactor": 3e4,
+        "rateModel": {
+          "jump": {
+            "baseRate": "20000000000000000",
+            "jumpRate": "100000000000000000",
+            "fullRate": "320000000000000000",
+            "jumpUtilization": 8e5
+          }
+        },
+        "state": "Pending",
+        "ptokenId": 8005
+      }
+    },
+    {
+      "assetId": 4294957296,
+      "marketConfig": {
+        "closeFactor": 50e4,
+        "collateralFactor": 50e4,
+        "liquidationThreshold": 55e4,
+        "reserveFactor": 15e4,
+        "supplyCap": "100000000000000000",
+        "borrowCap": "100000000000000000",
+        "liquidateIncentive": "1100000000000000000",
+        "liquidateIncentiveReservedFactor": 3e4,
+        "rateModel": {
+          "jump": {
+            "baseRate": "20000000000000000",
+            "jumpRate": "100000000000000000",
+            "fullRate": "320000000000000000",
+            "jumpUtilization": 8e5
+          }
+        },
+        "state": "Pending",
+        "ptokenId": 3003
+      }
+    }
+  ],
+  "pools": [
+    {
+      "pool": [102, 1],
+      "liquidityAmounts": ["100000000000", "10000000000000000"],
+      "lptokenReceiver": "5HHMY7e8UAqR5ZaHGaQnRW5EDR8dP7QpAyjeBu6V7vdXxxbf",
+      "liquidityProviderToken": 6000
+    },
+    {
+      "pool": [102, 101],
+      "liquidityAmounts": ["15000000000000", "50000000000000000"],
+      "lptokenReceiver": "5HHMY7e8UAqR5ZaHGaQnRW5EDR8dP7QpAyjeBu6V7vdXxxbf",
+      "liquidityProviderToken": 6001
+    },
+    {
+      "pool": [101, 1],
+      "liquidityAmounts": ["10000000000000000", "30000000000000000000"],
+      "lptokenReceiver": "5HHMY7e8UAqR5ZaHGaQnRW5EDR8dP7QpAyjeBu6V7vdXxxbf",
+      "liquidityProviderToken": 6002
+    },
+    {
+      "pool": [200070014, 101],
+      "liquidityAmounts": ["10000000000000000", "10000000000000000"],
+      "lptokenReceiver": "5HHMY7e8UAqR5ZaHGaQnRW5EDR8dP7QpAyjeBu6V7vdXxxbf",
+      "liquidityProviderToken": 6005
+    }
+  ],
+  "crowdloans": [
+    {
+      "paraId": 2013,
+      "derivativeIndex": 0,
+      "image": "kylinfinance/cumulus:v0.9.28",
+      "chain": "shell",
+      "ctokenId": 4000,
+      "cap": "100000000000000",
+      "endBlock": 28800,
+      "leaseStart": 0,
+      "leaseEnd": 7,
+      "pending": false
+    },
+    {
+      "paraId": 2016,
+      "derivativeIndex": 1,
+      "image": "kylinfinance/cumulus:v0.9.28",
+      "chain": "shell",
+      "ctokenId": 4000,
+      "cap": "1000000000000000",
+      "endBlock": 43200,
+      "leaseStart": 0,
+      "leaseEnd": 7,
+      "pending": true
+    },
+    {
+      "paraId": 2100,
+      "derivativeIndex": 2,
+      "image": "kylinfinance/cumulus:v0.9.28",
+      "chain": "shell",
+      "ctokenId": 4000,
+      "cap": "10000000000000000",
+      "endBlock": 202800,
+      "leaseStart": 0,
+      "leaseEnd": 7,
+      "pending": false
+    },
+    {
+      "paraId": 2032,
+      "derivativeIndex": 3,
+      "image": "kylinfinance/cumulus:v0.9.28",
+      "chain": "shell",
+      "ctokenId": 200070014,
+      "cap": "10000000000000000",
+      "endBlock": 202800,
+      "leaseStart": 0,
+      "leaseEnd": 7,
+      "pending": false
+    }
+  ],
+  "bridge": {
+    "members": [
+      "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+      "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+      "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y"
+    ],
+    "chainIds": [2, 3],
+    "bridgeTokens": [
+      {
+        "assetId": 1,
+        "id": 0,
+        "external": false,
+        "fee": "1000000000000",
+        "enable": true,
+        "outCap": "10000000000000000",
+        "outAmount": "0",
+        "inCap": "10000000000000000",
+        "inAmount": "0"
+      },
+      {
+        "assetId": 201,
+        "id": 1,
+        "external": true,
+        "fee": "300000000",
+        "enable": true,
+        "outCap": "10000000000",
+        "outAmount": "0",
+        "inCap": "10000000000",
+        "inAmount": "0"
+      },
+      {
+        "assetId": 202,
+        "id": 2,
+        "external": true,
+        "fee": "300000000",
+        "enable": true,
+        "outCap": "10000000000",
+        "outAmount": "0",
+        "inCap": "10000000000",
+        "inAmount": "0"
+      }
+    ]
+  },
+  "farmPools": [
+    {
+      "assetId": 1,
+      "rewardAssetId": 1,
+      "lockDuration": 0,
+      "coolDownDuration": "7200",
+      "rewardAmount": "2000000000000000",
+      "rewardDuration": "50400"
+    },
+    {
+      "assetId": 101,
+      "rewardAssetId": 1,
+      "lockDuration": 0,
+      "coolDownDuration": "7200",
+      "rewardAmount": "2000000000000000",
+      "rewardDuration": "50400"
+    }
+  ],
+  "assetsRegistry":[
+    {
+      "assetId": 1,
+      "assetType": {"Xcm":{"parents":1, "interior":{"X2":[{"Parachain": 2012},{"GeneralKey": "PARA"}]}}},
+      "unitsPerSecond":"1883239171374764"
+    },
+    {
+      "assetId": 101,
+      "assetType": {"Xcm":{"parents":1, "interior":"Here"}},
+      "unitsPerSecond":"53711462025"
+    },
+    {
+      "assetId": 102,
+      "assetType": {"Xcm":{"parents":1, "interior":{"X3":[{"Parachain": 1000},{"PalletInstance": 50},{"GeneralIndex": 1984}]}}},
+      "unitsPerSecond":"33333333"
+    },
+    {
+      "assetId": 108,
+      "assetType": {"Xcm":{"parents":1, "interior":{"X2":[{"Parachain": 2000},{"GeneralKey": "0x0000"}]}}},
+      "unitsPerSecond":"196078431372549"
+    }
+  ]
+}

@@ -6,8 +6,9 @@ import { blake2AsU8a } from '@polkadot/util-crypto'
 import { stringToU8a, bnToU8a, u8aConcat, u8aToHex } from '@polkadot/util'
 import { decodeAddress, encodeAddress } from '@polkadot/keyring'
 import { KeyringPair } from '@polkadot/keyring/types'
-import { Index } from '@polkadot/types/interfaces'
+import { AccountId, Index } from '@polkadot/types/interfaces'
 import { promisify } from 'util'
+import { Vec } from '@polkadot/types'
 
 const EMPTY_U8A_32 = new Uint8Array(32)
 
@@ -153,6 +154,11 @@ export const getRelayApi = async (endpoint: string): Promise<ApiPromise> => {
   })
 }
 
+export const getCouncilThreshold = async (api: ApiPromise): Promise<number> => {
+  const members = (await api.query.generalCouncilMembership.members()) as unknown as Vec<AccountId>
+  return Math.ceil(members.length / 2)
+}
+
 export const calcWeightPerSecond = (precision: number, price: number): number => {
   const WEIGHT_PER_SECOND = 10 ** 12
   // for fixed weigher always 600_000_000
@@ -162,9 +168,7 @@ export const calcWeightPerSecond = (precision: number, price: number): number =>
   /// max_fee = (weight_per_second * weight)/WEIGHT_PER_SECOND/(10**precision) * price
   /// so weight_per_second = max_fee*WEIGHT_PER_SECOND*(10**precision)/weight/price
   const weight_per_second = (((max_fee * WEIGHT_PER_SECOND) / weight) * 10 ** precision) / price
-  /// to avoid price sharply increased later so that we charge too much
-  /// just add some soft limit here
-  return Math.min(1000 * WEIGHT_PER_SECOND, Math.floor(weight_per_second))
+  return Math.floor(weight_per_second)
 }
 
 export const getDefaultRelayChainWsUrl = (): string => {
@@ -175,8 +179,8 @@ export const getDefaultRelayChainWsUrl = (): string => {
 
 export const getDefaultParachainWsUrl = (): string => {
   return process.env['RELAY_CHAIN_TYPE'] === 'kusama'
-    ? 'wss://pichiu-rococo-01.onebitdev.com'
-    : 'wss://pichiu-rococo-01.onebitdev.com'
+    ? 'ws://10.2.3.102:8844'
+    : 'wss://rpc.kylin.network'
 }
 
 export const getDefaultXcmFee = (): number => {
