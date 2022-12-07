@@ -5,14 +5,6 @@ import { BN } from '@polkadot/util'
 import { getApi, getCouncilThreshold, nextNonce } from '../../utils'
 import { Float } from '@polkadot/types-codec'
 import fs from 'fs'
-const addresses: string[][] = []
-const allContents = fs.readFileSync('distirbution.csv', 'utf-8')
-allContents.split(/\r?\n/).forEach(line => {
-  if (line) {
-    addresses.push(line.split(','))
-  }
-})
-
 
 export default function ({ createCommand }: CreateCommandParameters): Command {
   return createCommand('execute the airdrop')
@@ -28,14 +20,22 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
         options: { paraWs, filename }
       } = actionParameters
       
+      const addresses: string[][] = []
+      const allContents = fs.readFileSync('distirbution.csv', 'utf-8')
+      allContents.split(/\r?\n/).forEach(line => {
+        if (line) {
+          addresses.push(line.split(','))
+        }
+      })
+
       const api = await getApi(paraWs.toString())
       const signer = new Keyring({ type: 'sr25519' }).addFromUri(
         `${process.env.ACCOUNT_KEY || '//Alice'}`
       )
     
-        const delay = ms => new Promise(res => setTimeout(res, ms));
-        logger.warn(`Connected to WS endpoint: ${paraWs}`)
-        await delay(2000);
+      const delay = ms => new Promise(res => setTimeout(res, ms));
+      logger.warn(`Connected to WS endpoint: ${paraWs}`)
+      await delay(2000);
         
       //const tx = api.tx.utility.batchAll([
       //  api.tx.kylinFeed.createCollection(metadata,max,symbol),

@@ -16,13 +16,6 @@ function isValidAddress(address: string): boolean {
   }
 }
 import fs from 'fs'
-const addresses: string[] = []
-const allContents = fs.readFileSync('tokenHolders.txt', 'utf-8')
-allContents.split(/\r?\n/).forEach(line => {
-  if (line) {
-    addresses.push(line)
-  }
-})
 
 export default function ({ createCommand }: CreateCommandParameters): Command {
   return createCommand('create collection of feeds')
@@ -51,6 +44,14 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
         'https://dry-responsive-wildflower.discover.quiknode.pro/0fd3f35ace685648e47144b6ff8ba3aaa15882f9/'
 
       // eslint-disable-next-line @typescript-eslint/no-var-requires
+      
+      const addresses: string[] = []
+      const allContents = fs.readFileSync('tokenHolders.txt', 'utf-8')
+      allContents.split(/\r?\n/).forEach(line => {
+        if (line) {
+          addresses.push(line)
+        }
+      })
 
       const token = '0x67B6D479c7bB412C54e03dCA8E1Bc6740ce6b99C'
       const options: EthScanOptions = { batchSize: 2 }
