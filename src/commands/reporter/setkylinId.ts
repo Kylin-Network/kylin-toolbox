@@ -6,7 +6,7 @@ import { getApi, getCouncilThreshold, nextNonce } from '../../utils'
 export default function ({ createCommand }: CreateCommandParameters): Command {
   return createCommand('set kylinId of the Oracle parachain')
     .option('-p, --para-ws [url]', 'the parachain API endpoint', {
-      default: 'ws://10.2.3.102:8846'
+      default: `${process.env.PCHAIN1_WS || 'ws://10.2.3.102:8846'}`
     })
     .option('-o, --oracle_paraid: [value]', 'any value', {
       validator: program.NUMBER,

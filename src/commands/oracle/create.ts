@@ -13,7 +13,6 @@ import { PolkadotRuntimeParachainsConfigurationHostConfiguration } from '@polkad
 
 export default function ({ createCommand }: CreateCommandParameters): Command {
   const relayChainUrl: string = getDefaultRelayChainWsUrl()
-  const paraChainUrl: string = getDefaultParachainWsUrl()
   return createCommand('open hrmp channel to specific chain')
     .argument('<source>', 'paraId of source chain', {
       validator: program.NUMBER
@@ -22,7 +21,7 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
       validator: program.NUMBER
     })
     .option('-r, --relay-ws [url]', 'the relaychain API endpoint', {
-      default: relayChainUrl
+      default: `${process.env.RCHAIN_WS || relayChainUrl}` 
     })
     .option('-d, --dry-run [boolean]', 'whether to execute using SUDO_KEY', {
       validator: program.BOOLEAN,
