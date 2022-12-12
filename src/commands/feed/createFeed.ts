@@ -6,53 +6,63 @@ import { getApi, getCouncilThreshold, nextNonce } from '../../utils'
 export default function ({ createCommand }: CreateCommandParameters): Command {
   return createCommand('create a specific feed')
     .option('-p, --para-ws [url]', 'the parachain API endpoint', {
-      default: 'ws://10.2.3.102:8845'
+      default: `${process.env.PCHAIN1_WS || 'ws://10.2.3.102:8846'}`
     })
-    .option('-c, --collection_id: [value]', 'any number', {
+    .option('-c, --collection-id: [value]', 'collection id', {
       default: '0'
     })
-    .option('-o, --oracle_paraid: [value]', 'max amount', {
-      default: '2102'
+    .option('-o, --oracle-paraid: [value]', 'oracle parachain id', {
+      default: '2000'
     })
-    .option('-k, --key [hash]', "any hex data", {
-      default: '0x4343417069'
+    .option('-k, --key [key]', "key string", {
+      default: 'PriceBtcUsdt'
     })
-    .option('-u, --url [hash]', "any hex data", {
-      default: '0x68747470733a2f2f6d696e2d6170692e63727970746f636f6d706172652e636f6d2f646174612f70726963653f6673796d3d627463267473796d733d75736474'
+    .option('-u, --url [url]', "url string", {
+      default: 'https://min-api.cryptocompare.com/data/price?fsym=btc&tsyms=usdt'
+    })
+    .option('-v, --vpath [vpath]', 'vpath string', {
+      default: '/USDT'
     })
     .option('-d, --dry-run [boolean]', 'whether to execute using ACCOUNT_KEY', {
       validator: program.BOOLEAN,
-      default: true
+      default: false
     })
     .action(async actionParameters => {
       const {
         logger,
-        options: { paraWs, dryRun, collection_id, oracle_paraid, key, url }
+        options: { paraWs, dryRun, collectionId, oracleParaid, key, url, vpath }
       } = actionParameters
       
       const api = await getApi(paraWs.toString())
       const signer = new Keyring({ type: 'sr25519' }).addFromUri(
         `${process.env.ACCOUNT_KEY || '//Alice'}`
       )
-    
-        const delay = ms => new Promise(res => setTimeout(res, ms));
-        logger.warn(`Connected to WS endpoint: ${paraWs}`)
-        await delay(4000);
-        
 
-      const tx = api.tx.kylinFeed.createFeed(collection_id, oracle_paraid, key, url)
+      const tx = api.tx.kylinFeed.createFeed(collectionId, oracleParaid, key, url, vpath)
       if (dryRun) {
         logger.info(`hex-encoded call: ${tx.toHex()}`)
       }
-      await tx
-      .signAndSend(signer, { nonce: await nextNonce(api, signer) })
-      .then(response => {
-        return response;
-      })
-      .catch(err => {
-        logger.error(err.message)
-        process.exit(1)
-      })
-        process.exit(1)
+
+      const unsub = await tx.signAndSend(
+        signer,
+        ({ events = [], status, txHash }) => {
+          console.log(`Current status is ${status.type}`);
+
+          if (status.isInBlock) {
+            console.log(`Transaction included at blockHash ${status.asInBlock}`);
+            console.log(`Transaction hash ${txHash.toHex()}`);
+
+            // Loop through Vec<EventRecord> to display all events
+            events.forEach(({ phase, event: { data, method, section } }) => {
+              console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
+            });
+
+            unsub();
+            process.exit(0)
+          }
+        }).catch(err => {
+          logger.error(err.message)
+          process.exit(1)
+        })
     })
 }

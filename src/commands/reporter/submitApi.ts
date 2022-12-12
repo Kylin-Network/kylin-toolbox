@@ -44,7 +44,6 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
           console.log(`Current status is ${status.type}`);
 
           if (status.isInBlock) {
-            logger.info(`Call succeeded - API successfully submitted`)
             console.log(`Transaction included at blockHash ${status.asInBlock}`);
             console.log(`Transaction hash ${txHash.toHex()}`);
 

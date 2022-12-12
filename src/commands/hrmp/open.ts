@@ -8,7 +8,7 @@ import {
   getDefaultParachainWsUrl,
   getCouncilThreshold
 } from '../../utils'
-import { Command, CreateCommandParameters, program } from '@caporal/core'
+import { Command, CreateCommandParameters, ActionParameters, program } from '@caporal/core'
 import { Keyring } from '@polkadot/api'
 import { PolkadotRuntimeParachainsConfigurationHostConfiguration } from '@polkadot/types/lookup'
 
@@ -32,51 +32,53 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
       validator: program.BOOLEAN,
       default: true
     })
-    .action(async actionParameters => {
-      const {
-        logger,
-        args: { source, target },
-        options: { relayWs, paraWs, dryRun }
-      } = actionParameters
-      const relayApi = await getRelayApi(relayWs.toString())
-      const api = await getApi(paraWs.toString())
-      const configuration =
-        (await relayApi.query.configuration.activeConfig()) as unknown as PolkadotRuntimeParachainsConfigurationHostConfiguration
-      const encoded = relayApi.tx.hrmp
-        .hrmpInitOpenChannel(
-          target.valueOf() as number,
-          configuration.hrmpChannelMaxCapacity,
-          configuration.hrmpChannelMaxMessageSize
-        )
-        .toHex()
-      const signer = new Keyring({ type: 'sr25519' }).addFromUri(
-        `${process.env.ACCOUNT_KEY || '//Alice'}`
-      )
-      const proposal = api.tx.ormlXcm.sendAsSovereign(
-        {
-          V1: {
-            parents: 1,
-            interior: 'Here'
-          }
-        },
-        createXcm(`0x${encoded.slice(6)}`, sovereignRelayOf(source.valueOf() as number))
-      )
-      const tx = api.tx.generalCouncil.propose(
-        await getCouncilThreshold(api),
-        proposal,
-        proposal.length
-      )
+    .action(HrmpOpen)
+}
 
-      if (dryRun) {
-        return logger.info(`hex-encoded call: ${tx.toHex()}`)
+async function HrmpOpen(ap: ActionParameters) {
+  const {
+    logger,
+    args: { source, target },
+    options: { relayWs, paraWs, dryRun }
+  } = ap
+  const relayApi = await getRelayApi(relayWs.toString())
+  const api = await getApi(paraWs.toString())
+  const configuration =
+    (await relayApi.query.configuration.activeConfig()) as unknown as PolkadotRuntimeParachainsConfigurationHostConfiguration
+  const encoded = relayApi.tx.hrmp
+    .hrmpInitOpenChannel(
+      target.valueOf() as number,
+      configuration.hrmpChannelMaxCapacity,
+      configuration.hrmpChannelMaxMessageSize
+    )
+    .toHex()
+  const signer = new Keyring({ type: 'sr25519' }).addFromUri(
+    `${process.env.ACCOUNT_KEY || '//Alice'}`
+  )
+  const proposal = api.tx.ormlXcm.sendAsSovereign(
+    {
+      V1: {
+        parents: 1,
+        interior: 'Here'
       }
+    },
+    createXcm(`0x${encoded.slice(6)}`, sovereignRelayOf(source.valueOf() as number))
+  )
+  const tx = api.tx.generalCouncil.propose(
+    await getCouncilThreshold(api),
+    proposal,
+    proposal.length
+  )
 
-      await tx
-        .signAndSend(signer, { nonce: await nextNonce(api, signer) })
-        .then(() => process.exit(0))
-        .catch(err => {
-          logger.error(err.message)
-          process.exit(1)
-        })
+  if (dryRun) {
+    return logger.info(`hex-encoded call: ${tx.toHex()}`)
+  }
+
+  await tx
+    .signAndSend(signer, { nonce: await nextNonce(api, signer) })
+    .then(() => process.exit(0))
+    .catch(err => {
+      logger.error(err.message)
+      process.exit(1)
     })
 }

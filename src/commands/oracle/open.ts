@@ -13,7 +13,7 @@ import { PolkadotRuntimeParachainsConfigurationHostConfiguration } from '@polkad
 
 export default function ({ createCommand }: CreateCommandParameters): Command {
   const relayChainUrl: string = getDefaultRelayChainWsUrl()
-  return createCommand('open hrmp channel to specific chain')
+  return createCommand('open hrmp channel for specific parachains')
     .argument('<source>', 'paraId of source chain', {
       validator: program.NUMBER
     })
@@ -78,7 +78,6 @@ async function HrmpTest(ap: ActionParameters) {
   process.exit(0)
 
 }
-
 
 async function HrmpOpen(ap: ActionParameters) {
   const {

@@ -6,20 +6,20 @@ import { getApi, getCouncilThreshold, nextNonce } from '../../utils'
 export default function ({ createCommand }: CreateCommandParameters): Command {
   return createCommand('create collection of feeds')
     .option('-p, --para-ws [url]', 'the parachain API endpoint', {
-      default: 'ws://10.2.3.102:8845'
+      default: `${process.env.PCHAIN1_WS || 'ws://10.2.3.102:8846'}`
     })
-    .option('-m, --metadata [name]', 'any hex data', {
-      default: '0xaabbcc'
+    .option('-m, --metadata [string]', 'metadata string', {
+      default: 'metadata'
     })
     .option('-x, --max [value]', 'max amount', {
       default: '256'
     })
-    .option('-s, --symbol [hash]', "any hex data", {
-      default: '0xaabbcc'
+    .option('-s, --symbol [string]', "symbol string", {
+      default: 'symbol'
     })
     .option('-d, --dry-run [boolean]', 'whether to execute using ACCOUNT_KEY', {
       validator: program.BOOLEAN,
-      default: true
+      default: false
     })
     .action(async actionParameters => {
       const {
@@ -31,10 +31,7 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
       const signer = new Keyring({ type: 'sr25519' }).addFromUri(
         `${process.env.ACCOUNT_KEY || '//Alice'}`
       )
-    
-        const delay = ms => new Promise(res => setTimeout(res, ms));
-        logger.warn(`Connected to WS endpoint: ${paraWs}`)
-        await delay(4000);
+  
         
       //const tx = api.tx.utility.batchAll([
       //  api.tx.kylinFeed.createCollection(metadata,max,symbol),
@@ -44,15 +41,28 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
       if (dryRun) {
         logger.info(`hex-encoded call: ${tx.toHex()}`)
       }
-      await tx
-      .signAndSend(signer, { nonce: await nextNonce(api, signer) })
-      .then(response => {
-        return response;
-      })
-      .catch(err => {
-        logger.error(err.message)
-        process.exit(1)
-      })
-        process.exit(1)
+
+      const unsub = await tx.signAndSend(
+        signer,
+        ({ events = [], status, txHash }) => {
+          console.log(`Current status is ${status.type}`);
+
+          if (status.isInBlock) {
+            console.log(`Transaction included at blockHash ${status.asInBlock}`);
+            console.log(`Transaction hash ${txHash.toHex()}`);
+
+            // Loop through Vec<EventRecord> to display all events
+            events.forEach(({ phase, event: { data, method, section } }) => {
+              console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
+            });
+
+            unsub();
+            process.exit(0)
+          }
+        }).catch(err => {
+          logger.error(err.message)
+          process.exit(1)
+        })
+
     })
 }
