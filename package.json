@@ -6,6 +6,7 @@
   "scripts": {
     "start": "ts-node src/main.ts",
     "build": "tsc",
+    "watch": "tsc --watch",
     "format": "prettier --config .prettierrc.json 'src/**/*.ts' --write",
     "lint": "eslint . --ext .ts --fix"
   },

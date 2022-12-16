@@ -9,6 +9,7 @@ import { KeyringPair } from '@polkadot/keyring/types'
 import { AccountId, Index } from '@polkadot/types/interfaces'
 import { promisify } from 'util'
 import { Vec } from '@polkadot/types'
+import { RegistryTypes } from '@polkadot/types-codec/types'
 
 const EMPTY_U8A_32 = new Uint8Array(32)
 
@@ -142,15 +143,17 @@ export const createXcm = (encoded: string, refundAccount: string, originType = '
   }
 }
 
-export const getApi = async (endpoint: string): Promise<ApiPromise> => {
+export const getApi = async (endpoint: string, types: RegistryTypes = {}): Promise<ApiPromise> => {
   return ApiPromise.create({
-    provider: new WsProvider(endpoint)
+    provider: new WsProvider(endpoint),
+    types: types
   })
 }
 
-export const getRelayApi = async (endpoint: string): Promise<ApiPromise> => {
+export const getRelayApi = async (endpoint: string, types: RegistryTypes = {}): Promise<ApiPromise> => {
   return ApiPromise.create({
-    provider: new WsProvider(endpoint)
+    provider: new WsProvider(endpoint),
+    types: types
   })
 }
 
