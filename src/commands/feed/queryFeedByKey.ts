@@ -14,11 +14,8 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
     .option('-o, --oracle-paraid: [value]', 'oracle parachain id', {
       default: '2000'
     })
-    .option('-c, --collection-id [value]', 'collection id', {
-      default: '0'
-    })
-    .option('-n, --nft-id [value]', 'NFT id', {
-      default: '0'
+    .option('-k, --key [key]', "key string", {
+      default: 'PriceBtcUsdt'
     })
     .option('-d, --dry-run [boolean]', 'whether to execute using ACCOUNT_KEY', {
       validator: program.BOOLEAN,
@@ -27,7 +24,7 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
     .action(async actionParameters => {
       const {
         logger,
-        options: { paraWs, dryRun, oracleParaid, collectionId, nftId }
+        options: { paraWs, dryRun, oracleParaid, key }
       } = actionParameters
 
       const api = await getApi(
@@ -37,7 +34,7 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
       const signer = new Keyring({ type: 'sr25519' }).addFromUri(
         `${process.env.ACCOUNT_KEY || '//Alice'}`
       )
-      const tx = api.tx.kylinFeed.queryFeed(oracleParaid, collectionId, nftId)
+      const tx = api.tx.kylinFeed.queryFeedByKey(oracleParaid, key)
 
       const unsub = await tx.signAndSend(
         signer,
@@ -63,6 +60,9 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
       // clear old events
       const evts = await api.query.system.events()
       console.log(`Clear old events (${evts.length})`);
+      // value before query
+      // let value = await api.query.kylinFeed.values(key)
+      // console.log(`Value before query: ${value}`)
 
       api.query.system.events((events) => {
         //console.log(`\nReceived ${events.length} events:`);

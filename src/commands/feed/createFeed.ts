@@ -8,11 +8,11 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
     .option('-p, --para-ws [url]', 'the parachain API endpoint', {
       default: `${process.env.PCHAIN1_WS || 'ws://10.2.3.102:8846'}`
     })
-    .option('-c, --collection-id: [value]', 'collection id', {
-      default: '0'
-    })
     .option('-o, --oracle-paraid: [value]', 'oracle parachain id', {
       default: '2000'
+    })
+    .option('-c, --collection-id: [value]', 'collection id', {
+      default: '0'
     })
     .option('-k, --key [key]', "key string", {
       default: 'PriceBtcUsdt'
@@ -30,7 +30,7 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
     .action(async actionParameters => {
       const {
         logger,
-        options: { paraWs, dryRun, collectionId, oracleParaid, key, url, vpath }
+        options: { paraWs, dryRun, oracleParaid, collectionId, key, url, vpath }
       } = actionParameters
       
       const api = await getApi(paraWs.toString())
@@ -38,7 +38,7 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
         `${process.env.ACCOUNT_KEY || '//Alice'}`
       )
 
-      const tx = api.tx.kylinFeed.createFeed(collectionId, oracleParaid, key, url, vpath)
+      const tx = api.tx.kylinFeed.createFeed(oracleParaid, collectionId, key, url, vpath)
       if (dryRun) {
         logger.info(`hex-encoded call: ${tx.toHex()}`)
       }

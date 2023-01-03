@@ -8,6 +8,9 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
     .option('-p, --para-ws [url]', 'the parachain API endpoint', {
       default: `${process.env.PCHAIN1_WS || 'ws://10.2.3.102:8846'}`
     })
+    .option('-o, --oracle-paraid: [value]', 'oracle parachain id', {
+      default: '2000'
+    })
     .option('-m, --metadata [string]', 'metadata string', {
       default: 'metadata'
     })
@@ -24,20 +27,19 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
     .action(async actionParameters => {
       const {
         logger,
-        options: { paraWs, dryRun, metadata, max, symbol }
+        options: { paraWs, dryRun, oracleParaid, metadata, max, symbol }
       } = actionParameters
       
       const api = await getApi(paraWs.toString())
       const signer = new Keyring({ type: 'sr25519' }).addFromUri(
         `${process.env.ACCOUNT_KEY || '//Alice'}`
       )
-  
-        
+
       //const tx = api.tx.utility.batchAll([
       //  api.tx.kylinFeed.createCollection(metadata,max,symbol),
       //])
 
-      const tx = api.tx.kylinFeed.createCollection(metadata,max,symbol)
+      const tx = api.tx.kylinFeed.createCollection(oracleParaid,metadata,max,symbol)
       if (dryRun) {
         logger.info(`hex-encoded call: ${tx.toHex()}`)
       }
