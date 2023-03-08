@@ -1,4 +1,4 @@
-FROM node:14.17.0 as builder
+FROM node:14.21.3 as builder
 LABEL description="This is the build stage for kylin helper. Here we create the dist."
 
 WORKDIR /kylin-toolbox
@@ -9,7 +9,7 @@ RUN yarn && yarn build
 
 # ===== SECOND STAGE ======
 
-FROM node:14.17.0
+FROM node:14.21.3
 LABEL description="This is the 2nd stage: a very small image where we copy the kylin helper."
 
 COPY --from=builder /kylin-toolbox/dist /usr/local/lib/dist
