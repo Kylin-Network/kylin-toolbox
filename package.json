@@ -29,7 +29,7 @@
     "@polkadot/api": "^8.3.2-2",
     "@polkadot/keyring": "^9.1.1",
     "@polkadot/rpc-core": "^8.3.2-2",
-    "@polkadot/util": "^9.1.1",
+    "@polkadot/util": "^9.7.2",
     "@polkadot/util-crypto": "^9.1.1",
     "axios": "^0.27.2",
     "bignumber.js": "^9.0.2",
