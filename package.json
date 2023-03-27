@@ -28,7 +28,7 @@
     "@mycrypto/eth-scan": "^3.5.3",
     "@polkadot/api": "^8.3.2-2",
     "@polkadot/keyring": "^9.1.1",
-    "@polkadot/rpc-core": "^8.3.2-2",
+    "@polkadot/rpc-core": "^8.14.1",
     "@polkadot/util": "^9.1.1",
     "@polkadot/util-crypto": "^9.7.2",
     "axios": "^0.27.2",
