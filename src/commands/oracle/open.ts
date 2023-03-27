@@ -21,7 +21,7 @@ export default function ({ createCommand }: CreateCommandParameters): Command {
       validator: program.NUMBER
     })
     .option('-r, --relay-ws [url]', 'the relaychain API endpoint', {
-      default: `${process.env.RCHAIN_WS || relayChainUrl}` 
+      default: `${process.env.RCHAIN_WS || relayChainUrl}`
     })
     .option('-d, --dry-run [boolean]', 'whether to execute using SUDO_KEY', {
       validator: program.BOOLEAN,
@@ -39,7 +39,7 @@ async function HrmpTest(ap: ActionParameters) {
   const relayApi = await getRelayApi(relayWs.toString())
   const configuration =
     (await relayApi.query.configuration.activeConfig()) as unknown as PolkadotRuntimeParachainsConfigurationHostConfiguration
-  
+
   const Alice = '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY';
   const Bob = '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty';
   const CC = '5FZunkiwWGvrLm7hijjUnhq7AroeQaBdykd19Lu8bui6Qyf5';
@@ -65,7 +65,7 @@ async function HrmpTest(ap: ActionParameters) {
         unsub();
       }
     });
-  
+
   const delay = ms => new Promise(res => setTimeout(res, ms));
   await delay(8000);
 
@@ -105,21 +105,21 @@ async function HrmpOpen(ap: ActionParameters) {
   }
 
   const unsub = await tx.signAndSend(signer, ({ events = [], status, txHash }) => {
-      console.log(`Current status is ${status.type}`);
+    console.log(`Current status is ${status.type}`);
 
-      if (status.isInBlock) {
-        console.log(`Transaction included at blockHash ${status.asInBlock}`);
-        console.log(`Transaction hash ${txHash.toHex()}`);
+    if (status.isInBlock) {
+      console.log(`Transaction included at blockHash ${status.asInBlock}`);
+      console.log(`Transaction hash ${txHash.toHex()}`);
 
-        // Loop through Vec<EventRecord> to display all events
-        events.forEach(({ phase, event: { data, method, section } }) => {
-          console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
-        });
+      // Loop through Vec<EventRecord> to display all events
+      events.forEach(({ phase, event: { data, method, section } }) => {
+        console.log(`\t' ${phase}: ${section}.${method}:: ${data}`);
+      });
 
-        unsub();
-        process.exit(0)
-      }
-    })
+      unsub();
+      process.exit(0)
+    }
+  })
     .catch(err => {
       logger.error(err.message)
       process.exit(1)
@@ -130,5 +130,5 @@ async function HrmpOpen(ap: ActionParameters) {
   // await delay(8000);
   // unsub();
   // process.exit(0)
-  
+
 }
